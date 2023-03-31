@@ -328,7 +328,8 @@ enum FurnaceGUIWindows {
   GUI_WINDOW_CLOCK,
   GUI_WINDOW_GROOVES,
   GUI_WINDOW_INTRO_MON,
-  GUI_WINDOW_SPOILER
+  GUI_WINDOW_SPOILER,
+  GUI_WINDOW_MIDI_IMPORT
 };
 
 enum FurnaceGUIMobileScenes {
@@ -387,7 +388,9 @@ enum FurnaceGUIFileDialogs {
 
   GUI_FILE_TEST_OPEN,
   GUI_FILE_TEST_OPEN_MULTI,
-  GUI_FILE_TEST_SAVE
+  GUI_FILE_TEST_SAVE,
+
+  GUI_FILE_MIDI_IMPORT
 };
 
 enum FurnaceGUIWarnings {
@@ -651,6 +654,9 @@ enum FurnaceGUIActions {
   GUI_ACTION_ORDERS_MOVE_DOWN,
   GUI_ACTION_ORDERS_REPLAY,
   GUI_ACTION_ORDERS_MAX,
+
+  GUI_ACTION_MIDI_IMPORT_OPEN,
+  GUI_ACTION_MIDI_IMPORT_TO_CHANNEL,
 
   GUI_ACTION_MAX
 };
@@ -1538,6 +1544,10 @@ class FurnaceGUI {
       emptyLabel2("..") {}
   } settings;
 
+  struct MIDIImport {
+    int track;
+  } midiImport;
+
   struct Tutorial {
     int userComesFrom;
     bool introPlayed;
@@ -1569,6 +1579,8 @@ class FurnaceGUI {
   bool pianoOpen, notesOpen, channelsOpen, regViewOpen, logOpen, effectListOpen, chanOscOpen;
   bool subSongsOpen, findOpen, spoilerOpen, patManagerOpen, sysManagerOpen, clockOpen, speedOpen;
   bool groovesOpen, introMonOpen;
+  bool midiImportOpen;
+  DivMIDI* pendingMIDI;
 
   bool basicMode, shortIntro;
 
@@ -1988,6 +2000,7 @@ class FurnaceGUI {
   void drawSpoiler();
   void drawClock();
   void drawTutorial();
+  void drawMIDIImport();
 
   void parseKeybinds();
   void promptKey(int which);
@@ -2101,7 +2114,7 @@ class FurnaceGUI {
     String getLastError();
     const char* noteNameNormal(short note, short octave);
     const char* noteName(short note, short octave);
-    bool decodeNote(const char* what, short& note, short& octave);
+    static bool decodeNote(const char* what, short& note, short& octave);
     void bindEngine(DivEngine* eng);
     void updateScroll(int amount);
     void addScroll(int amount);

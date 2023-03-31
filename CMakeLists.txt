@@ -100,6 +100,7 @@ endif()
 
 list(APPEND DEPENDENCIES_INCLUDE_DIRS "extern/SAASound/include")
 list(APPEND DEPENDENCIES_INCLUDE_DIRS "extern/vgsound_emu-modified")
+list(APPEND DEPENDENCIES_INCLUDE_DIRS "extern/midifile")
 
 find_package(Threads REQUIRED)
 list(APPEND DEPENDENCIES_LIBRARIES ${CMAKE_THREAD_LIBS_INIT})
@@ -362,6 +363,14 @@ extern/Nuked-PSG/ympsg.c
 extern/opm/opm.c
 extern/Nuked-OPLL/opll.c
 extern/opl/opl3.c
+
+extern/midifile/Binasc.cpp
+extern/midifile/MidiEvent.cpp
+extern/midifile/MidiEventList.cpp
+extern/midifile/MidiFile.cpp
+extern/midifile/MidiMessage.cpp
+extern/midifile/Options.cpp
+
 src/engine/platform/sound/sn76496.cpp
 src/engine/platform/sound/ay8910.cpp
 src/engine/platform/sound/saa1099.cpp
@@ -556,6 +565,8 @@ src/engine/platform/dummy.cpp
 
 src/engine/export/abstract.cpp
 src/engine/export/amigaValidation.cpp
+
+src/engine/midiFile.cpp
 )
 
 if (USE_SNDFILE)
@@ -641,6 +652,7 @@ src/gui/pattern.cpp
 src/gui/piano.cpp
 src/gui/presets.cpp
 src/gui/regView.cpp
+src/gui/midiImport.cpp
 src/gui/sampleEdit.cpp
 src/gui/scaling.cpp
 src/gui/settings.cpp

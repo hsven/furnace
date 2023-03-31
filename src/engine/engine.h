@@ -21,6 +21,7 @@
 #define _ENGINE_H
 #include "config.h"
 #include "instrument.h"
+#include "midifile.h"
 #include "song.h"
 #include "dispatch.h"
 #include "export.h"
@@ -1056,6 +1057,12 @@ class DivEngine {
 
     // send MIDI message
     bool sendMidiMessage(TAMidiMessage& msg);
+
+    // load MIDI file
+    DivMIDI* midiFromFile(const char* path);
+
+    //Import a MIDI channel
+    bool importToChannel(DivMIDI* midi);
 
     // perform secure/sync operation
     void synchronized(const std::function<void()>& what);

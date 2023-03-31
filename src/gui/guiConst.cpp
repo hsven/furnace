@@ -697,6 +697,9 @@ const FurnaceGUIActionDef guiActions[GUI_ACTION_MAX]={
   D("ORDERS_MOVE_DOWN", "Move down", FURKMOD_SHIFT|SDLK_DOWN),
   D("ORDERS_REPLAY", "Replay", 0),
   D("ORDERS_MAX", "", NOT_AN_ACTION),
+
+  D("MIDI_IMPORT", "Midi import", 0),
+  D("MIDI_IMPORT_TO_CHANNEL", "Midi import to channel", 0),
 };
 #undef D
 

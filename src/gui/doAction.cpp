@@ -1538,5 +1538,11 @@ void FurnaceGUI::doAction(int what) {
     case GUI_ACTION_ORDERS_REPLAY:
       setOrder(curOrder);
       break;
+    case GUI_ACTION_MIDI_IMPORT_OPEN:
+      openFileDialog(GUI_FILE_MIDI_IMPORT);
+      break;
+    case GUI_ACTION_MIDI_IMPORT_TO_CHANNEL:
+      e->importToChannel(pendingMIDI);
+      break;
   }
 }

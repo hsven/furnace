@@ -1910,6 +1910,16 @@ void FurnaceGUI::openFileDialog(FurnaceGUIFileDialogs type) {
         dpiScale
       );
       break;
+    case GUI_FILE_MIDI_IMPORT:
+      if (!dirExists(workingDirTest)) workingDirTest=getHomeDir();
+      hasOpened=fileDialog->openLoad(
+        "MIDI Import",
+        {"MIDI file", "*.mid"},
+        "MIDI file{.mid}",
+        workingDirTest,
+        dpiScale
+      );
+      break;
   }
   if (hasOpened) curFileDialog=type;
   //ImGui::GetIO().ConfigFlags|=ImGuiConfigFlags_NavEnableKeyboard;
@@ -3814,6 +3824,10 @@ bool FurnaceGUI::loop() {
           ImGui::EndMenu();
         }
         ImGui::Separator();
+        if (ImGui::MenuItem("import midi")) {
+            midiImportOpen=!midiImportOpen; 
+        }
+        ImGui::Separator();
         if (ImGui::BeginMenu("add chip...")) {
           DivSystem picked=systemPicker();
           if (picked!=DIV_SYSTEM_NULL) {
@@ -4169,6 +4183,7 @@ bool FurnaceGUI::loop() {
       drawInsList();
       drawInsEdit();
       drawMixer();
+      drawMIDIImport();
 
       readOsc();
 
@@ -4316,6 +4331,7 @@ bool FurnaceGUI::loop() {
         case GUI_FILE_TEST_OPEN:
         case GUI_FILE_TEST_OPEN_MULTI:
         case GUI_FILE_TEST_SAVE:
+        case GUI_FILE_MIDI_IMPORT:
           workingDirTest=fileDialog->getPath()+DIR_SEPARATOR_STR;
           break;
       }
@@ -4797,6 +4813,14 @@ bool FurnaceGUI::loop() {
             case GUI_FILE_TEST_SAVE:
               showWarning(fmt::sprintf("You saved: %s",copyOfName),GUI_WARN_GENERIC);
               break;
+            case GUI_FILE_MIDI_IMPORT: {
+              logD("MIDI LOADING WHAT %s", copyOfName);
+              delete pendingMIDI;
+              pendingMIDI = NULL;
+              pendingMIDI = e->midiFromFile(copyOfName.c_str());
+           
+              break;
+            }
           }
           curFileDialog=GUI_FILE_OPEN;
         }

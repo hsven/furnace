@@ -455,6 +455,8 @@ void FurnaceGUI::doPaste(PasteMode mode, int arg, bool readClipboard, String cli
 
     String& line=data[i];
 
+    int in = e->curOrders->ord[iCoarse][curOrder];
+    logW("Current Pattern/Order: %d -- %d", in, curOrder);
     while (charPos<line.size() && iCoarse<lastChannel) {
       DivPattern* pat=e->curPat[iCoarse].getPattern(e->curOrders->ord[iCoarse][curOrder],true);
       if (line[charPos]=='|') {

@@ -23,6 +23,7 @@
 #include "song.h"
 #include <zlib.h>
 #include <fmt/printf.h>
+#include <MidiFile.h>
 
 #define DIV_READ_SIZE 131072
 #define DIV_DMF_MAGIC ".DelekDefleMask."
@@ -5737,3 +5738,21 @@ SafeWriter* DivEngine::saveDMF(unsigned char version) {
   return w;
 }
 
+DivMIDI* DivEngine::midiFromFile(const char* path) {
+  logW("Entered MIDI load");
+  smf::MidiFile file;
+  file.read(path);
+  file.doTimeAnalysis();
+  file.linkNotePairs();
+
+  // int tracks = file.getTrackCount();
+  // logW("Track Count of the Midi File: %d", tracks);
+
+  DivMIDI* midiObj = new DivMIDI(&file);
+  // midiObj->file = &file;
+  // midiObj->name = file.getFilename();
+  // midiObj->trackCount = file.getTrackCount();
+  
+  // midiObj->evaluateTracks();
+  return midiObj;
+}
